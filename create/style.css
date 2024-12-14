@@ -1,0 +1,247 @@
+/*body*/
+body {
+    font-family: Arial, sans-serif;  
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column; 
+    background-color: #eee;
+    color: #000;
+  }
+  
+  /*header*/
+  header {
+    background-color: #000; 
+    color: #fff; 
+    padding: 5px; 
+    margin: 0; 
+    width: 100%;
+    min-height: 3vh; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+  
+  /*h*/
+  h1 {
+    margin-top: 0;
+    font-size: 3em;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  h2 {
+    margin-top: 0;
+    font-size: 1em;
+  }
+  h3 {
+    margin-top: 0;
+    font-size: 2em;
+  }
+  
+  /*section*/
+  .section {
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /*label */
+   label {
+      font-size: 1.15em;
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: inline-block; 
+      color: #333;
+      margin-right: 20px;
+      cursor: pointer;
+      position: relative;
+      padding-left: 10px; 
+  }
+  
+  /*button*/
+  .button {
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #808080;
+    color: #eee;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 1em;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .button:hover {
+    background-color: #000000 ;
+  }
+  
+  .cancel {
+    background-color: #dc3545;
+    margin-right: 10px;
+  }
+  .cancel:hover {
+    background-color: #c82333;
+  }
+  
+  .save {
+    background-color: #28a745;
+    margin-right: 10px;
+  }
+  .save:hover {
+    background-color: #218838;
+  }
+  
+  .remove {
+    background-color: #800000;
+    margin-right: 10px;
+  }
+  .remove:hover {
+    background-color: #8b0000;
+  }
+  
+  
+  .backH{
+    background-color: #000000;
+    border-radius: 50%;
+    padding: 20px;
+    position: fixed;
+    bottom: 1em;
+    right: 10px;
+  }
+  .backH:hover{
+    background-color: #ffffff;
+    color: #000;
+  }
+  
+  /*field*/
+  .field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .field-input {
+    width: 30%;
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 16px;
+    box-sizing: border-box; 
+    margin-bottom: 15px; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .field-input:focus {
+      border-color: #000080; 
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+      outline: none; 
+   }
+  
+  /*fieldset*/
+  fieldset {
+      border: 2px solid #ccc; 
+      border-radius: 5px; 
+      padding: 15px; 
+      margin: 15px 0; 
+      background-color: #f9f9f9;
+  }
+  legend {
+      font-size: 1.15em;
+      font-weight: bold;
+      margin-bottom: 8px;
+      padding: 0 10px;
+      color: #333;
+      margin-right: 20px;
+      cursor: pointer;
+      position: relative;
+      padding-left: 10px; 
+  }
+  
+  input[type="radio"] {
+      display: none; 
+  }
+  input[type="radio"] + label {
+      position: relative;
+      padding-left: 30px; 
+      font-size: 1em;
+      cursor: pointer;
+  }
+  input[type="radio"] + label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      background-color: white;
+      transition: background-color 0.3s, border-color 0.3s;
+  }
+  input[type="radio"]:checked + label::before {
+      background-color: #7FFFD4;
+      border-color: #228B22;
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
+  }
+  input[type="radio"]:checked + label::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: white;  
+  }
+  
+  /*image*/
+  .upload-container {
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        border: 2px dashed #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        background-color: #f9f9f9;
+      }
+  .upload-container:hover {
+        background-color: #eaeaea;
+      }
+  .upload-container .plus-sign {
+        font-size: 50px;
+        color: #aaa;
+      }
+  .photo-preview {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    position: absolute;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center; 
+    cursor: pointer;
+  }    
+  #imageInput {
+        display: none;
+      }
+  
+  .error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+  }
+  
+  .main {
+    height: 1000px;
+  }

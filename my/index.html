@@ -1,0 +1,424 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV | Profile Builder</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src= "script.js"></script>
+    <link rel="stylesheet" href= "style.css">
+  </head>
+  <body>
+    <header>      
+        <h1  onclick="window.open('https://profile-builder-2.free.beeceptor.com/allcv', '_blank')">ProFile Builder</h1>
+        <h2>CVs</h2>
+        <h3>My CV</h3>
+    </header>
+ 
+    <main x-data="{ 
+      foto: '',
+      fullname: 'Victoriia Strilets', 
+      citizenship: 'Ukrainian',   
+      gender: 'Female',
+      maritalStatus: 'Single',   
+      age: 19, 
+      contacts: { email: 'johndoe@example.com', emails: [], phone: '123-456-7890', phones: [], country: 'Ukraine', city: 'Kharkiv'},
+      languages: [{name: 'English', level: 'B1'}], 
+      education: [{courseName: 'Computer Science', instituteName: 'University of XYZ', startDate: '2012-09-01', endDate: '2016-06-01'}], 
+      workExperience: [{companyName: 'TechCorp', workCountry: 'Ukraine', workCity: 'Kharkiv', position: 'Software Developer', workStart: '2016-06-01', workEnd: '2020-06-01', achievements: 'Developed key features for product X.'}],
+      programmingLanguages: [{progLang: 'JavaScript', progLevel: 'Junior'}, {progLang: 'Python', progLevel: 'Junior'}], 
+      activeSection: 'personalDetails', 
+      deleteConfirmation: false 
+    }">
+     
+      <!-- Navigation Buttons -->
+      <div class="content-container"
+      <ul>
+       <div x-data="imageUploader">
+    <div >
+        <img :src="photo || 'https://ireland.apollo.olxcdn.com/v1/files/o8g59udi9rii3-UA/image;s=1126x2000'" 
+             class="img" id="profileImage" alt="Profile Image" >
+        <label for="imageInput" class="plus-sign" x-show="!photo">+</label>
+    </div>
+
+    <input type="file" id="imageInput" accept="image/*" x-ref="fileInput" x-on:change="handleFileChange($event)" hidden>
+         </div>
+    <li> <button class="but" id="personalDetails" x-on:click="activeSection = 'personalDetails'">Personal Details</button> </li>
+    <li> <button class="but" id="contacts" x-on:click="activeSection = 'contacts'">Contacts</button></li>
+    <li> <button class="but" id="languages" x-on:click="activeSection = 'languages'">Languages</button></li>
+    <li> <button class="but" id="education" x-on:click="activeSection = 'education'">Education</button></li>
+    <li> <button class="but" id="workExperience" x-on:click="activeSection = 'workExperience'">Work Experience</button></li>
+    <li> <button class="but" id="programmingLanguages" x-on:click="activeSection = 'programmingLanguages'">Programming Languages</button></li>
+</ul>
+    </div>
+
+        
+
+</div>
+  <div class="content">
+      <!-- Personal Details Section -->
+      <section x-show="activeSection === 'personalDetails'">
+        <h3>Personal Details</h3>
+        <div>
+          <p><span x-text="fullname"></span></p>
+          <p><span x-text="citizenship"></span></p>
+          <p> <span x-text="gender"></span></p>
+          <p> <span x-text="maritalStatus"></span></p>
+          <p><span x-text="age"></span></p>
+        </div>
+        <button class="button" x-on:click="activeSection = 'editPersonalDetails'">Edit</button>
+      </section>
+
+      <!-- Edit Personal Details Modal -->
+      <div x-show="activeSection === 'editPersonalDetails'" >
+        <h3>Edit Personal Details</h3>
+        
+        <div class="field">
+          <label for="fullname">Full Name:</label>
+          <input class="field-input" id="fullname" type="text" x-model="fullname" />
+           <label for="citizenship">Citizenship:</label>
+         <input class="field-input" id="citizenship" type="text" x-model="citizenship" />
+        </div>
+        <fieldset>
+          <legend>Choose your gender</legend>
+          <input id="genderMale" type="radio" value="Male" x-model="gender" />
+          <label for="genderMale">Male</label>
+          <input id="genderFemale" type="radio" value="Female" x-model="gender" />
+          <label for="genderFemale">Female</label>
+          <input id="genderOther" type="radio" value="Other" x-model="gender" />
+          <label for="genderOther">Other</label>
+        </fieldset>
+        <fieldset>
+          <legend>Choose your marital status</legend>
+          <input id="married" type="radio" value="Married" x-model="maritalStatus" />
+          <label for="married">Married</label>
+          <input id="single" type="radio" value="Single" x-model="maritalStatus" />
+          <label for="single">Single</label>
+         </fieldset>
+        <div>
+          <label for="age">Age:</label>
+          <input class="field-input" id="age" type="number" x-model="age" min="14" step="1" />
+        </div>
+        <button class="button save" x-on:click="activeSection = 'personalDetails'">Save</button>
+        <button class="button cancel" x-on:click="activeSection = 'personalDetails'">Cancel</button>
+      </div>
+      </div>
+         </div>
+      <div class="content">
+         <!-- Contacts Section -->
+<section x-show="activeSection === 'contacts'">
+  <h3>Contacts</h3>
+  <div>
+    <label for="email">Email:</label>
+    <span x-text="contacts.email"></span>
+  </div>
+  <div>
+    <label for="phone">Phone:</label>
+    <span x-text="contacts.phone"></span>
+  </div>
+    <div>
+  <label for="location">Location:</label>
+               <span x-text="contacts.country"></span>,<span x-text="contacts.city"></span>
+           </div>
+ 
+  <button class="button" x-on:click="activeSection = 'editContacts'">Edit</button>
+</section>
+
+<!-- Edit Contacts Modal -->
+<div x-show="activeSection === 'editContacts'">
+  <h3>Edit Contacts</h3>
+  <div x-data="{ email: contacts.email, phone: contacts.phone, country: contacts.country, city: contacts.city, newEmail: '', addingEmail: false, newPhone: '', addingPhone: false }">
+    <div>
+      <label>Email:</label>
+      <input class="field-input" class="field-input" type="email" x-model="email" />
+    </div>
+     <div>
+       <div x-data="emailManager()">
+      <template x-for="(email, idx) in contacts.emails" :key="idx">
+        <div>
+          <span x-text="email"></span>
+          <button class = "button remove" x-on:click="contacts.emails.splice(idx, 1)">Remove</button>
+        </div>
+      </template>
+      <div x-show="addingEmail">
+        <input class="field-input" type="email" x-model="newEmail" placeholder="user@nure.ua" @input="validateEmail()">  
+    <p x-show="errorMessage" class="error" x-text="errorMessage"></p>
+    <button class="button save" x-on:click="addEmail()">Add</button>
+    <button class="button cancel" @click="cancelAdding()">Cancel</button>
+      </div>
+      <div x-show="!addingEmail">
+        <button class="button" x-on:click="addingEmail = true">Add Email</button>
+      </div>
+    </div>
+    </div>
+    <div>
+      <label>Phone:</label>
+      <input class="field-input" type="tel" x-model="phone" />
+    </div>
+
+    <!-- Phone Numbers Section with Add Phone Number in Edit Mode -->
+    <div>
+      <div x-data="phoneManager()">
+      <template x-for="(phone, idx) in contacts.phones" :key="idx">
+        <div>
+          <span x-text="phone"></span>
+          <button class = "button remove" x-on:click="contacts.phones.splice(idx, 1)">Remove</button>
+        </div>
+      </template>
+      <div x-show="addingPhone">
+        <input class="field-input" type="text" x-model="newPhone" placeholder="Enter phone number" @input="validatePhone()">
+    <p x-show="errorMessage" class="error" x-text="errorMessage"></p>
+    <button class="button save" @click="addPhone()">Add</button>
+    <button class="button cancel" @click="cancelAdding()">Cancel</button>
+      </div>
+      <div x-show="!addingPhone">
+        <button class="button" x-on:click="addingPhone = true">Add Phone Number</button>
+      </div>
+    </div>
+</div>
+    <div>
+      <label for="location">Location:</label>
+     <div class="field">
+          <label for="address">Country:</label>
+          <input class="field-input" id="address" type="text" x-model="country" />
+          <label for="address">City:</label>
+          <input class="field-input" id="address" type="text" x-model="city" />
+           </div>
+    </div>
+    <button class="button save" x-on:click="contacts.email = email; contacts.phone = phone; contacts.country = country, contacts.city = city; activeSection = 'contacts'">Save</button>
+    <button class="button cancel" x-on:click="activeSection = 'contacts'">Cancel</button>
+  </div>
+</div>
+      </div>
+        <div class="content">
+      <!-- Languages Section -->
+      <section x-show="activeSection === 'languages'">
+        <h3>Languages</h3>
+        <template x-for="(language, idx) in languages" :key="idx">
+          <div>
+            <p><span x-text="language.name"></span> - <span x-text="language.level"></span></p>
+          </div>
+        </template>
+        <button class="button" x-on:click="activeSection = 'editLanguages'">Edit</button>
+      </section>
+
+      <!-- Edit Languages Modal -->
+      <div x-show="activeSection === 'editLanguages'" >
+        <h3>Edit Languages</h3>
+        <div x-data="{ name: '', level: '' }">
+          <div>
+            <label>Name of Language:</label>
+            <input class="field-input" type="text" x-model="name" />
+          </div>
+          <fieldset>
+           <input id="native" type="radio" value="Native" x-model="level" /> 
+              <label for="native">Native</label>
+              <input id="a1" type="radio" value="A1" x-model="level" /> 
+                <label for="a1">A1</label>
+              <input id="a2" type="radio" value="A2" x-model="level" /> 
+                  <label for="a2">A2</label>
+              <input id="b1" type="radio" value="B1" x-model="level" /> 
+                    <label for="b1">B1</label>
+              <input id="b2" type="radio" value="B2" x-model="level" /> 
+                      <label for="b2">B2</label>
+              <input id="c1" type="radio" value="C1" x-model="level" /> 
+                        <label for="c1">C1</label>
+              <input id="c2" type="radio" value="C2" x-model="level" /> 
+                          <label for="c2">C2</label>
+          </fieldset>
+          <button class="button save" x-on:click="languages.push({ name, level }); name = ''; level = ''; activeSection = 'languages'">Save</button>
+          <button class="button cancel" x-on:click="activeSection = 'languages'">Cancel</button>
+        </div>
+        <!-- Remove Language Button -->
+        <template x-for="(language, idx) in languages" :key="idx">
+          <div>
+            <span x-text="language.name"></span> - <span x-text="language.level"></span>
+            <button class = "button remove" x-on:click="languages.splice(idx, 1)">Remove</button>
+          </div>
+        </template>
+      </div>
+  </div>
+       <div class="content">   
+       <!-- Education Section -->
+      <section x-show="activeSection === 'education'">
+         <h3><strong>Courses:</strong></h3>        
+        <template x-for="(edu, idx) in education" :key="idx">
+          <div>
+            <span x-text="edu.courseName"></span> <span>at</span> <span x-text="edu.instituteName"></span> 
+            (<span x-text="formatDate(edu.startDate)"></span> - <span x-text="formatDate(edu.endDate)"></span>)
+          </div>
+        </template>
+        <button class="button" x-on:click="activeSection = 'editEducation'">Edit</button>
+      </section>
+
+      <!-- Edit Education Modal -->
+      <div x-show="activeSection === 'editEducation'" >
+        <h3>Edit Education</h3>
+        <div x-data="{ courseName: '', instituteName: '', startDate: '', endDate: '' }">
+          <div>
+            <label>Course Name:</label>
+            <input class="field-input" type="text" x-model="courseName" />
+          </div>
+          <div>
+            <label>Institute Name:</label>
+            <input class="field-input" type="text" x-model="instituteName" />
+          </div>
+          <div>
+            <label for="date">Period:</label>
+          <div class="field">
+          <label for="date">Start Date:</label>
+           <input class="field-input" id="startDate" type="date" x-model="startDate" placeholder="dd.mm.yyyy" />
+          <label for="date">End Date:</label>
+          <input class="field-input" id="endDate" type="date" x-model="endDate" placeholder="dd.mm.yyyy"/>
+           </div> 
+          </div>
+          <button class="button save" x-on:click="education.push({ courseName, instituteName, startDate, endDate }); courseName = ''; instituteName = ''; startDate = ''; endDate = ''; activeSection = 'education'">Save</button>
+          <button class="button cancel" x-on:click="activeSection = 'education'">Cancel</button>
+        </div>
+        <!-- Remove Education Button -->
+        <template x-for="(edu, idx) in education" :key="idx">
+          <div>
+            <span x-text="edu.courseName"></span> at <span x-text="edu.instituteName"></span> 
+            (<span x-text="formatDate(edu.startDate)"></span> - <span x-text="formatDate(edu.endDate)"></span>)
+            <button class = "button remove" x-on:click="education.splice(idx, 1)">Remove</button>
+          </div>
+        </template>
+      </div>
+</div>
+     <div class="content">
+      <!-- Work Experience Section -->
+      <section x-show="activeSection === 'workExperience'">
+        <h3>Work Experience</h3>
+        <template x-for="(work, idx) in workExperience" :key="idx">
+          <div>
+            <label for="companyName">Company Name:</label>
+            <span x-text="work.companyName"></span>
+           <div>
+    <label for="location">Location:</label>
+               <span x-text="work.workCity"></span> , <span x-text="work.workCountry"></span>
+           </div>
+            <div>
+              <label for="position">Position:</label>
+            <span x-text="work.position"></span> 
+              </div>
+            <label for="period">Period</label>
+             (<span x-text="formatDate(work.workStart)"></span> - <span x-text="formatDate(work.workEnd)"></span>)   
+            <p> <label><strong>Achievements:</strong></label> <span x-text="work.achievements"></span></p>
+          </div>
+        </template>
+        <button class="button" x-on:click="activeSection = 'editWorkExperience'">Edit</button>
+      </section>
+
+      <!-- Edit Work Experience Modal -->
+      <div x-show="activeSection === 'editWorkExperience'" >
+        <h3>Edit Work Experience</h3>
+        <div x-data="{ companyName: '', workCountry: '', workCity: '', position: '', workStart: '', workEnd: '', achievements: '' }">
+          <div>
+            <label>Company Name:</label>
+            <input class="field-input" type="text" x-model="companyName" />
+          </div>
+          <div>
+          <label for="location">Location:</label>
+          <div class="field">
+          <label for="address">Country:</label>
+          <input class="field-input" id="workCountry" type="text" x-model="workCountry" />
+          <label for="address">City:</label>
+          <input class="field-input" id="workCity" type="text" x-model="workCity" />
+           </div>
+        </div>
+          <div>
+            <label>Position:</label>
+            <input class="field-input" type="text" x-model="position" />
+          </div>
+         <div >
+          <label for="date">Period:</label>
+          <div class="field">
+          <label for="date">Work Start Date:</label>
+          <input class="field-input" id="workStart" type="date" x-model="workStart"  placeholder="dd.mm.yyyy"/>
+          <label for="date">Work End Date:</label>
+         <input class="field-input" id="workEnd" type="date" x-model="workEnd" placeholder="dd.mm.yyyy"/>
+               </div>
+              </div>
+          <div class="field">
+            <label>Achievements:</label>
+            <textarea class="field-input" x-model="achievements"></textarea>
+          </div>
+          <button class="button save" x-on:click="workExperience.push({ companyName, workCountry, workCity, position, workStart, workEnd, achievements }); companyName = ''; workCountry= '', workCity= '', position = ''; workStart = ''; workEnd = ''; achievements = ''; activeSection = 'workExperience'">Save</button>
+          <button class="button cancel" x-on:click="activeSection = 'workExperience'">Cancel</button>
+        </div>
+        <!-- Remove Work Experience Button -->
+        <template x-for="(work, idx) in workExperience" :key="idx">
+          <div>
+            <span x-text="work.companyName"></span> - <span x-text="work.position"></span>
+            <button class = "button remove" x-on:click="workExperience.splice(idx, 1)">Remove</button>
+          </div>
+        </template>
+      </div>
+</div>
+  <div class="content">
+      <!-- Programming Languages Section -->
+      <section x-show="activeSection === 'programmingLanguages'">
+        <h3>Programming Languages</h3>
+        <template x-for="(lang, idx) in programmingLanguages" :key="idx">
+          <div>
+            <p><span x-text="lang.progLang"></span> - <span x-text="lang.progLevel"></span></p>
+          </div>
+        </template>
+        <button class="button" x-on:click="activeSection = 'editProgrammingLanguages'">Edit</button>
+      </section>
+
+      <!-- Edit Programming Languages Modal -->
+      <div x-show="activeSection === 'editProgrammingLanguages'" >
+        <h3>Edit Programming Languages</h3>
+        <div x-data="{ progLang: '', progLevel: '' }">
+          <div>
+            <label>Programming Language:</label>
+            <input class="field-input" type="text" x-model="progLang" />
+          </div>
+          <fieldset>
+            <legend>Proficiency Level:</legend>
+        <input id="trainee" type="radio" value="Trainee" x-model="progLevel" /> 
+        <label for="trainee">Trainee</label>
+        <input id="junior" type="radio" value="Junior" x-model="progLevel" /> 
+        <label for="junior">Junior</label>
+        <input id="middle" type="radio" value="Middle" x-model="progLevel" />
+        <label for="middle">Middle</label>
+        <input id="senior" type="radio" value="Senior" x-model="progLevel" /> 
+        <label for="senior">Senior</label>
+          </fieldset>
+          <button class="button save" x-on:click="programmingLanguages.push({ progLang, progLevel }); progLang = ''; progLevel = ''; activeSection = 'programmingLanguages'">Save</button>
+          <button class="button cancel" x-on:click="activeSection = 'programmingLanguages'">Cancel</button>
+        </div>
+        <!-- Remove Programming Language Button -->
+        <template x-for="(lang, idx) in programmingLanguages" :key="idx">
+          <div>
+            <span x-text="lang.progLang"></span> - <span x-text="lang.progLevel"></span>
+            <button class = "button remove" x-on:click="programmingLanguages.splice(idx, 1)">Remove</button>
+          </div>
+        </template>
+      </div>
+</div>
+    </div>
+      <!-- Delete CV Modal -->
+      <div x-show="deleteConfirmation">
+        <h4>Are you sure you want to delete your CV?</h4>
+        <div class="button-container">
+        <button class="button button-no" x-on:click="deleteConfirmation = false">No</button>
+        <button class="button button-yes"x-on:click="alert('CV deleted!'); deleteConfirmation = false;">Yes</button>
+          </div>
+      </div>
+ <button class="button backH" x-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })">
+        ⩕
+    </button>
+      <!-- Delete CV Button -->
+      <button class = "button removeCV-button" x-on:click="deleteConfirmation = true">Delete CV</button>
+    </main>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <img class="modal-img" id="modalImage" />
+      <button class="modal-close" id="closeModal">✖</button>
+    </div>
+  </div>
+   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  </body>
+</html>

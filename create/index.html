@@ -1,0 +1,333 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create | Profile Builder</title>    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src= "script.js"></script>
+    <link rel="stylesheet" href= "style.css">
+  </head>
+  <body>
+    <main x-data="{
+      photo: '',
+      personalDetails: {
+            fullName: '',
+            gender: '',
+            age: '',
+            citizenship: '',
+            maritalStatus: '',
+        },
+        contacts: {
+            emails: [],
+            phoneNumbers: [],
+            location: {
+                country: '',
+                city: '',
+            },
+        },
+      languages: [], 
+      education: [], 
+      workExperience: [], 
+      programmingLanguages: [] 
+    }">
+      <header>
+        <h1 onclick="window.open('https://profile-builder-2.free.beeceptor.com/allcv', '_blank')">ProFile Builder</h1>
+        <h2>Create CV</h2>
+         
+      </header>  
+  
+    <button class="button backH" x-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })">
+        ⩕
+    </button>
+    
+      <!-- Personal Details Section -->
+      
+      <section>
+        <h3 class = "section section-title">Personal Details</h3>
+        
+        <div class="upload-container" x-data="imageUploader()" x-model="photo">
+    <label for="imageInput" class="plus-sign">+</label>
+    <input type="file" id="imageInput" accept="image/*" x-on:change="handleFileChange($event)" x-show="!preview">   
+
+    <!-- Show the image preview if selected -->
+    <img x-show="photo" :src="photo" alt="Image Preview" class="photo-preview" x-on:click="$refs.fileInput.click()" >
+          <input type="file" id="imageInput" accept="image/*" x-ref="fileInput" x-on:change="handleFileChange($event)" hidden>
+  </div>
+       
+        
+        <div class="field">          
+          <label for="fullname">Full Name:</label>
+          <input class="field-input" id="fullname" type="text" x-model="personalDetails.fullname" />
+          <label for="citizenship">Citizenship:</label>
+          <input class="field-input" id="citizenship" type="text" x-model="personalDetails.citizenship" />
+        </div>
+        <fieldset>
+          <legend>Choose your gender</legend>
+          <input id="genderMale" type="radio" value="Male" x-model="personalDetails.gender" />
+          <label for="genderMale">Male</label>
+          <input id="genderFemale" type="radio" value="Female" x-model="personalDetails.gender" />
+          <label for="genderFemale">Female</label>
+          <input id="genderOther" type="radio" value="Other" x-model="personalDetails.gender" />
+          <label for="genderOther">Other</label>
+        </fieldset>
+        <fieldset>
+          <legend>Choose your marital status</legend>
+          <input id="married" type="radio" value="Married" x-model="personalDetails.maritalStatus" />
+          <label for="married">Married</label>
+          <input id="single" type="radio" value="Single" x-model="personalDetails.maritalStatus" />
+          <label for="single">Single</label>
+         </fieldset>
+        <div class="field">
+  <label for="age">Age:</label>
+        <input id="age" type="number" x-model="personalDetails.age" class="field-input" min="14" step="1" />       
+        </div>
+      </section>
+
+      <!-- Contacts Section -->
+      <section>
+        <h3 class = "section section-title">Contacts</h3>        
+        <div class="field">
+          <label for="email">Email:</label>
+        </div>
+        <div x-data="{ addingEmail: false, newEmail: '' }">
+            <div x-data="emailManager()">
+  <template x-for="(email, idx) in contacts.emails" :key="idx">
+    <div>
+      <span x-text="email"></span>
+      <button class="button remove" x-on:click="removeEmail(idx)">Remove</button>
+    </div>
+  </template>
+  <div x-show="addingEmail">
+    <input class="field-input" type="email" x-model="newEmail" placeholder="user@nure.ua" @input="validateEmail()">  
+    <p x-show="errorMessage" class="error" x-text="errorMessage"></p>
+    <button class="button save" x-on:click="addEmail()">Add</button>
+    <button class="button cancel" @click="cancelAdding()">Cancel</button>
+  
+  
+</div>
+  <div x-show="!addingEmail">
+    <button class="button" x-on:click="addingEmail = true">Add Email</button>
+  </div>
+</div>
+        <div class="field">
+         <label for="phone" >Phone:</label>
+        </div>
+        <div x-data="{ addingPhone: false, newPhone: ''}">
+          <div x-data="phoneManager()">
+  <template x-for="(phone, idx) in contacts.phoneNumbers" :key="idx">
+    <div>
+      <span x-text="phone"></span>
+      <button class="button remove" @click="removePhone(idx)">Remove</button>
+    </div>
+  </template>
+  <div x-show="addingPhone">
+    <input class="field-input" type="text" x-model="newPhone" placeholder="Enter phone number" @input="validatePhone()">
+    <p x-show="errorMessage" class="error" x-text="errorMessage"></p>
+    <button class="button save" @click="addPhone()">Add</button>
+    <button class="button cancel" @click="cancelAdding()">Cancel</button>
+  </div>
+  <div x-show="!addingPhone">
+    <button class="button" x-on:click="addingPhone = true">Add Phone Number</button>
+  </div>
+</div>
+          
+        <div>
+          <label for="location">Location:</label>
+          <div class="field">
+          <label for="country">Country:</label>
+          <input class="field-input" id="inputLocationCountry" type="text" x-model="contacts.location.country" />
+          <label for="city">City:</label>
+          <input class="field-input" id="inputLocationCity" type="text" x-model="contacts.location.city" />
+           </div>
+        </div>
+      </section>
+
+      <!-- Languages Section -->
+      <section>
+        <h3 class = "section section-title">Languages</h3>
+        <div x-data="{ adding: false, name: '', level: '' }">
+          <template x-for="(language, idx) in languages" :key="idx">
+            <div>
+              <span x-text="language.name"></span> - <span x-text="language.level"></span>
+              <button class = "button remove" x-on:click="languages.splice(idx, 1)">Remove</button>
+            </div>
+          </template>
+          <div x-show="adding">
+            <div class="field">
+              <label>Name of Language:</label>
+              <input class="field-input" type="text" x-model="name" />
+            </div>
+            <fieldset>
+              <legend>Proficiency Level:</legend>
+              <input id="native" type="radio" value="Native" x-model="level" /> 
+              <label for="native">Native</label>
+              <input id="a1" type="radio" value="A1" x-model="level" /> 
+                <label for="a1">A1</label>
+              <input id="a2" type="radio" value="A2" x-model="level" /> 
+                  <label for="a2">A2</label>
+              <input id="b1" type="radio" value="B1" x-model="level" /> 
+                    <label for="b1">B1</label>
+              <input id="b2" type="radio" value="B2" x-model="level" /> 
+                      <label for="b2">B2</label>
+              <input id="c1" type="radio" value="C1" x-model="level" /> 
+                        <label for="c1">C1</label>
+              <input id="c2" type="radio" value="C2" x-model="level" /> 
+                          <label for="c2">C2</label>
+            </fieldset>
+          </div>
+          <div x-show="!adding">
+            <button class="button" x-on:click="adding = true">Add Language</button>
+          </div>
+          <div x-show="adding">
+            <button class="button save" x-on:click="languages.push({ name, level }); name = ''; level = ''; adding = false">Save</button>
+            <button class="button cancel" x-on:click="adding = false; name = ''; level = ''">Cancel</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education Section -->
+      <section>
+        <h3 class = "section section-title">Education</h3>
+        <div x-data="{ adding: false, courseName: '', instituteName: '', startDate: '', endDate: '' }">
+          <template x-for="(edu, idx) in education" :key="idx">
+            <div>
+              <span x-text="edu.courseName"></span> at <span x-text="edu.instituteName"></span> 
+              ( <span x-text="formatDate(edu.startDate)"></span> - <span x-text="formatDate(edu.endDate)"></span>)
+              <button class = "button remove" x-on:click="education.splice(idx, 1)">Remove</button>
+            </div>
+          </template>
+          <div x-show="adding">
+            <div class="field">
+              <label>Course Name:</label>
+              <input class="field-input" type="text" x-model="courseName" />
+            </div>
+            <div class="field">
+              <label>Institute Name:</label>
+              <input class="field-input" type="text" x-model="instituteName" />
+            </div>
+           <div>
+          <label for="date">Period:</label>
+          <div class="field">
+          <label for="date">Start Date:</label>
+          <input class="field-input" id="startDate" type="date" x-model="startDate" placeholder="dd.mm.yyyy" />
+          <label for="date">End Date:</label>
+          <input class="field-input" id="endDate" type="date" x-model="endDate" placeholder="dd.mm.yyyy"/>
+
+          </div>
+           </div>   
+            </div>  
+          <div x-show="!adding">
+            <button class="button" x-on:click="adding = true">Add Education</button>
+          </div>
+          <div x-show="adding">
+            <button class="button save" x-on:click="education.push({ courseName, instituteName, startDate, endDate }); courseName = ''; instituteName = ''; startDate = ''; endDate = ''; adding = false">Save</button>
+            <button class="button cancel" x-on:click="adding = false; courseName = ''; instituteName = ''; startDate = ''; endDate = ''">Cancel</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Work Experience Section -->
+      <section>
+        <h3 class = "section section-title">Work Experience</h3>
+        <div x-data="{ adding: false, companyName: '', workCountry: '', workCity: '', position: '', workStart: '', workEnd: '', achievements: '' }">
+          <template x-for="(work, idx) in workExperience" :key="idx">
+            <div>
+              <span x-text="work.companyName"></span> 
+              <div>
+    <label for="location">Location:</label>
+               <span x-text="work.workCity"></span> , <span x-text="work.workCountry"></span>
+           </div>
+              <span x-text="work.position"></span> 
+             (<span x-text="formatDate(work.workStart)"></span> - <span x-text="formatDate(work.workEnd)"></span>)              
+              <p><strong>Achievements:</strong> <span x-text="work.achievements"></span></p>
+              <button class = "button remove" x-on:click="workExperience.splice(idx, 1)">Remove</button>
+            </div>
+          </template>
+          <div x-show="adding">
+            <div class="field">
+              <label>Company Name:</label>
+              <input class="field-input" type="text" x-model="companyName" />
+            </div>
+            <div>
+              <div>
+          <label for="location">Location:</label>
+          <div class="field">
+          <label for="address">Country:</label>
+          <input class="field-input" id="workCountry" type="text" x-model="workCountry" />
+          <label for="address">City:</label>
+          <input class="field-input" id="workCity" type="text" x-model="workCity" />
+           </div>
+        </div>
+              <label>Position:</label>
+              <input class="field-input" type="text" x-model="position" />
+            </div>
+            <div >
+          <label for="date">Period:</label>
+          <div class="field">
+          <label for="date">Work Start Date:</label>
+          <input class="field-input" id="workStart" type="date" x-model="workStart"  placeholder="dd.mm.yyyy"/>
+          <label for="date">Work End Date:</label>
+          <input class="field-input" id="workEnd" type="date" x-model="workEnd" placeholder="dd.mm.yyyy"/>
+               </div>
+              </div>
+              <div class="field">
+              <label>Achievements:</label>
+              <textarea  class="field-input" x-model="achievements"></textarea>
+          </div>
+          </div>
+          <div x-show="!adding">
+            <button class="button" x-on:click="adding = true">Add Work Experience</button>
+          </div>
+          <div x-show="adding">
+            <button class="button save" x-on:click="workExperience.push({ companyName, workCountry, workCity, position, workStart, workEnd,  achievements}); companyName = ''; workCountry = ''; workCity = ''; position = '';  workStart = ''; workEnd = ''; achievements =  '', adding = false">Save</button>
+            <button class="button cancel" x-on:click="adding = false; companyName = ''; workCountry = ''; workCity = ''; position = ''; workStart = ''; workEnd = ''; achievements =  ''">Cancel</button>
+          </div>
+        </div>
+      </section>
+<section>
+  <h3 class = "section section-title">Programming Languages</h3>
+  <div x-data="{ adding: false, progLang: '', progLevel: '' }">
+    <template x-for="(lang, idx) in programmingLanguages" :key="idx">
+      <div>
+        <span x-text="lang.progLang"></span> - <span x-text="lang.progLevel"></span>
+        <button class = "button remove" x-on:click="programmingLanguages.splice(idx, 1)">Remove</button>
+      </div>
+    </template>
+    <div x-show="adding">
+      <div class="field">
+        <label>Programming Language:</label>
+        <input class="field-input" type="text" x-model="progLang" />
+      </div>
+      <fieldset>        
+        <legend>Proficiency Level:</legend>
+        <input id="trainee" type="radio" value="Trainee" x-model="progLevel" /> 
+        <label for="trainee">Trainee</label>
+        <input id="junior" type="radio" value="Junior" x-model="progLevel" /> 
+        <label for="junior">Junior</label>
+        <input id="middle" type="radio" value="Middle" x-model="progLevel" />
+        <label for="middle">Middle</label>
+        <input id="senior" type="radio" value="Senior" x-model="progLevel" /> 
+        <label for="senior">Senior</label>
+      </fieldset>
+    </div>
+    <div x-show="!adding">
+      <button class="button" x-on:click="adding = true">Add Programming Language</button>
+    </div>
+    <div x-show="adding">
+      <button class="button save" x-on:click="programmingLanguages.push({ progLang, progLevel }); progLang = ''; progLevel = ''; adding = false">Save</button>
+      <button class="button cancel" x-on:click="adding = false; progLang = ''; progLevel = ''">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<!-- Submit and Clear Section -->
+<div>
+  <div class="button-container">
+   <button  class="button save"  x-on:click="console.log({ fullname, gender, age, email, phones, address, languages, education, workExperience, programmingLanguages })">Create CV</button>   
+  <button  class="button cancel" x-on:click= "personalDetails = {}; contacts = {}; languages = []; education = []; workExperience = []; programmingLanguages = [], clearImage()">Clear</button>
+</div>    
+  </div>    
+ 
+</main>
+</body>     
+</html>

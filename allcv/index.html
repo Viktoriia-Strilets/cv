@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home | Profile Builder</title>  
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script defer src= "script.js"></script>
+  <link rel="stylesheet" href= "style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>ProFile Builder</h1>
+    <h2>All CVs</h2>
+    
+  </header>
+ 
+  <!-- Alpine.js Data -->
+  <main x-data="{ 
+      fullname: 'Viktoriia Strilets',         
+      id: '1',   
+      citizenship: 'Ukrainian',   
+      gender: 'Female',
+      maritalStatus: 'Single',   
+      age: 19,          
+      languages: [{name: 'English', level: 'B1'}], 
+      programmingLanguages: [{progLang: 'JavaScript', progLevel: 'Junior'}, {progLang: 'C++', progLevel: 'Junior'}], 
+      showDetails: false 
+    }">
+
+    <!-- Create CV Button -->
+     <div nclick="window.open('https://profile-builder-2.free.beeceptor.com/create_cv', '_blank')">
+    <button class="button create-cv">✏ Create a new CV</button>
+    </div>
+     <button class="button backH" x-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })">
+        ⩕
+    </button>
+   
+    <div class="container">   
+      <div class="profile-list">
+        <div class="profile-card">
+          <div>
+           <img class = "img" src="https://ireland.apollo.olxcdn.com/v1/files/o8g59udi9rii3-UA/image;s=1126x2000" id="profileImage" />
+          </div>
+          <div class="profile-content">
+            <h3><span x-text="fullname"></span></h3>
+
+            <button class="button more-details" 
+                    x-on:click="showDetails = !showDetails">
+              <span>Previews</span>
+            </button>
+            <div class="profile-details" 
+                 x-bind:class="{'visible': showDetails}">
+              <p><strong>ID: </strong><span x-text="id"></span></p>
+              <h2>Personal Details:</h2>
+        <ul>
+          <li><span x-text="citizenship"></span></li>
+          <li> <span x-text="gender"></span></li>
+          <li> <span x-text="maritalStatus"></span></li>
+          <li><span x-text="age"></span></li>
+        </ul>
+              <h2>Languages:</h2>
+              <ul>
+                <template x-for="(language, idx) in languages" :key="idx">
+                  <li>
+                     <span x-text="language.name"></span> - <span x-text="language.level"></span>
+                  </li>
+                </template>
+              </ul>
+              <h2>Programming Languages:</h2>
+              <ul>
+                <template x-for="(lang, idx) in programmingLanguages" :key="idx">
+                  <li>
+                    <span x-text="lang.progLang"></span> - <span x-text="lang.progLevel"></span>
+                  </li>
+                </template>
+              </ul>
+            </div>
+            <a onclick="window.open('https://profile-builder-2.free.beeceptor.com/cv', '_blank')">
+            <button class="button more-details"><span>More details</span></button>
+              </a>
+      </div> 
+      </div>
+     </div>
+    </div>
+  </main>
+  
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <img class="modal-img" id="modalImage" />
+      <button class="modal-close" id="closeModal">✖</button>
+    </div>
+  </div>
+   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  
+</body>
+</html>
