@@ -1,55 +1,62 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('cv-container');
-
-  const cvId = 1; // Приклад ID, вибраного користувачем
-fetch(`https://profile-builder-2.free.beeceptor.com/cv?id=${cvId}`)
+function fetchData() {
+  fetch('https://profile-builder-2.free.beeceptor.com/cv', {
+    method: 'GET', 
+  })
   .then(response => response.json())
   .then(data => {
-    // Відобразіть деталі CV
-    console.log(data);
+    console.log('Response from Beeceptor:', data);
   })
-  .catch(error => console.error('Error fetching CV:', error));
-});
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+fetchData(); 
 
 document.addEventListener('alpine:init', () => {
-    Alpine.data('imageUploader', () => ({
-      photo: '',
-      handleFileChange(event) {
-        const file = event.target.files[0];
-        if (file) {
-          this.photo = URL.createObjectURL(file);
-          this.isUrlInputVisible = false; 
-        }
-      },
-      clearImage() {
-          this.photo = null;         this.$refs.fileInput.value = ""; 
-      },
+  Alpine.data('imageUploader', () => ({
+    photo: '',
+    handleFileChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.photo = URL.createObjectURL(file);
+        this.isUrlInputVisible = false; 
+      }
+    },
+    clearImage() {
+        this.photo = null;         this.$refs.fileInput.value = ""; 
+    },
+
+  }));
+});
+
   
-    }));
-  });
-  
-  const image = document.getElementById('profileImage');
-  const modalOverlay = document.getElementById('modalOverlay');
-  const modalImage = document.getElementById('modalImage');
-  const closeModalButton = document.getElementById('closeModal');
-  
-  image.addEventListener('click', function(event) {
-    modalImage.src = event.target.src; 
-    modalOverlay.style.display = 'flex'; 
-  });
-  
-  closeModalButton.addEventListener('click', function() {
-    modalOverlay.style.display = 'none';
-  });
- 
-  modalOverlay.addEventListener('click', function() {
-    modalOverlay.style.display = 'none'; 
-  });
- 
-  const modalContent = document.querySelector('.modal-content');
-  modalContent.addEventListener('click', function(event) {
-    event.stopPropagation(); 
-  });
+  document.addEventListener('DOMContentLoaded', function() {
+    const image = document.getElementById('profileImage');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalImage = document.getElementById('modalImage');
+    const closeModalButton = document.getElementById('closeModal');
+    
+    
+    image.addEventListener('click', function(event) {
+      modalImage.src = event.target.src;  
+      modalOverlay.style.display = 'flex'; 
+    
+    closeModalButton.addEventListener('click', function() {
+      modalOverlay.style.display = 'none'; 
+    });
+    
+    
+    modalOverlay.addEventListener('click', function() {
+      modalOverlay.style.display = 'none'; 
+    });
+    
+    
+    const modalContent = document.querySelector('.modal-content');
+    modalContent.addEventListener('click', function(event) {
+      event.stopPropagation(); 
+    });
+    })
+    })
   
   function emailManager() {
       return {

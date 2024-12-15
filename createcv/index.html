@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create | Profile Builder</title>    
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script defer src= "script.js"></script>
+    <script type="application/javascript" src= "script.js"></script>
     <link rel="stylesheet" href= "style.css">
   </head>
   <body>
@@ -31,7 +31,7 @@
       programmingLanguages: [] 
     }">
       <header>
-        <h1 onclick="window.open('https://profile-builder-2.free.beeceptor.com/allcv', '_blank')">ProFile Builder</h1>
+        <h1 onclick="window.open('http://127.0.0.1:5500/allcv/index.html', '_blank')">ProFile Builder</h1>
         <h2>Create CV</h2>
          
       </header>  
@@ -41,16 +41,16 @@
     </button>
     
       <!-- Personal Details Section -->
-      
+      <form class="container-md border p-5" x-data="form" x-on:submit.prevent="submit()">
       <section>
         <h3 class = "section section-title">Personal Details</h3>
         
         <div class="upload-container" x-data="imageUploader()" x-model="photo">
     <label for="imageInput" class="plus-sign">+</label>
-    <input type="file" id="imageInput" accept="image/*" x-on:change="handleFileChange($event)" x-show="!preview">   
+    <input type="file" id="imageInput" accept="image/*" x-on:change="handleFileChange($event)" x-show="!photo" x-ref="fileInput">   
 
     <!-- Show the image preview if selected -->
-    <img x-show="photo" :src="photo" alt="Image Preview" class="photo-preview" x-on:click="$refs.fileInput.click()" >
+    <img x-show="photo" :src="photo" class="photo-preview" x-on:click="$refs.fileInput.click()" >
           <input type="file" id="imageInput" accept="image/*" x-ref="fileInput" x-on:change="handleFileChange($event)" hidden>
   </div>
        
@@ -323,11 +323,11 @@
 <!-- Submit and Clear Section -->
 <div>
   <div class="button-container">
-   <button  class="button save"  x-on:click="console.log({ fullname, gender, age, email, phones, address, languages, education, workExperience, programmingLanguages })">Create CV</button>   
-  <button  class="button cancel" x-on:click= "personalDetails = {}; contacts = {}; languages = []; education = []; workExperience = []; programmingLanguages = [], clearImage()">Clear</button>
+   <button  class="button save" x-on:click="alert('CV created!')" type="submit">Create CV</button>   
+   <button  class="button cancel" x-on:click= "personalDetails = {}; contacts = {}; languages = []; education = []; workExperience = []; programmingLanguages = [], clearImage()">Clear</button>
 </div>    
   </div>    
- 
+</form>
 </main>
 </body>     
 </html>

@@ -1,16 +1,20 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('allcv-container');
-
-  fetch('https://profile-builder-2.free.beeceptor.com/allcv')
+function fetchData() {
+  fetch('https://profile-builder-2.free.beeceptor.com/allcv', {
+    method: 'GET', 
+  })
   .then(response => response.json())
   .then(data => {
-    // Відобразіть список CV у таблиці або картках
-    console.log(data);
+    console.log('Response from Beeceptor:', data);
   })
-  .catch(error => console.error('Error fetching all CVs:', error));
-});
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
 
 
+fetchData(); 
+
+document.addEventListener('DOMContentLoaded', function() {
 const image = document.getElementById('profileImage');
 const modalOverlay = document.getElementById('modalOverlay');
 const modalImage = document.getElementById('modalImage');
@@ -35,4 +39,5 @@ const modalContent = document.querySelector('.modal-content');
 modalContent.addEventListener('click', function(event) {
   event.stopPropagation(); 
 });
+})
 })

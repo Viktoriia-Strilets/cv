@@ -4,12 +4,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CV | Profile Builder</title>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script defer src= "script.js"></script>
+    <script type="application/javascript" src= "script.js"></script>
     <link rel="stylesheet" href= "style.css">
   </head>
   <body>
     <header>      
-        <h1  onclick="window.open('https://profile-builder-2.free.beeceptor.com/allcv', '_blank')">ProFile Builder</h1>
+        <h1  onclick="window.open('http://127.0.0.1:5500/allcv/index.html', '_blank')">ProFile Builder</h1>
         <h2>CVs</h2>
         <h3>My CV</h3>
     </header>
@@ -21,22 +21,22 @@
       gender: 'Female',
       maritalStatus: 'Single',   
       age: 19, 
-      contacts: { email: 'johndoe@example.com', emails: [], phone: '123-456-7890', phones: [], country: 'Ukraine', city: 'Kharkiv'},
+      contacts: { email: 'viktoriia.strilts@nure.ua', emails: [], phone: '+380-66-5542-765', phones: [], country: 'Ukraine', city: 'Kharkiv'},
       languages: [{name: 'English', level: 'B1'}], 
       education: [{courseName: 'Computer Science', instituteName: 'University of XYZ', startDate: '2012-09-01', endDate: '2016-06-01'}], 
       workExperience: [{companyName: 'TechCorp', workCountry: 'Ukraine', workCity: 'Kharkiv', position: 'Software Developer', workStart: '2016-06-01', workEnd: '2020-06-01', achievements: 'Developed key features for product X.'}],
-      programmingLanguages: [{progLang: 'JavaScript', progLevel: 'Junior'}, {progLang: 'Python', progLevel: 'Junior'}], 
+      programmingLanguages: [{progLang: 'JavaScript', progLevel: 'Junior'}, {progLang: 'C#', progLevel: 'Junior'}], 
       activeSection: 'personalDetails', 
       deleteConfirmation: false 
     }">
      
       <!-- Navigation Buttons -->
-      <div class="content-container"
+      <div class="content-container">
       <ul>
        <div x-data="imageUploader">
     <div >
-        <img :src="photo || 'https://ireland.apollo.olxcdn.com/v1/files/o8g59udi9rii3-UA/image;s=1126x2000'" 
-             class="img" id="profileImage" alt="Profile Image" >
+        <img src="image.jpg" 
+             class="img" id="profileImage" >
         <label for="imageInput" class="plus-sign" x-show="!photo">+</label>
     </div>
 
@@ -179,9 +179,9 @@
       <label for="location">Location:</label>
      <div class="field">
           <label for="address">Country:</label>
-          <input class="field-input" id="address" type="text" x-model="country" />
+          <input class="field-input" id="cityAddress" type="text" x-model="country" />
           <label for="address">City:</label>
-          <input class="field-input" id="address" type="text" x-model="city" />
+          <input class="field-input" id="countryAddress" type="text" x-model="city" />
            </div>
     </div>
     <button class="button save" x-on:click="contacts.email = email; contacts.phone = phone; contacts.country = country, contacts.city = city; activeSection = 'contacts'">Save</button>
@@ -419,6 +419,5 @@
       <button class="modal-close" id="closeModal">✖</button>
     </div>
   </div>
-   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   </body>
 </html>

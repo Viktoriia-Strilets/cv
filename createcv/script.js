@@ -1,13 +1,54 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('create-cv-container');
 
-  fetch('https://profile-builder-2.free.beeceptor.com/create_cv')
-  .then(response => response.json())
-  .then(data => {
-    // Використовуйте шаблон для заповнення полів форми
-    console.log(data.template);
-  })
-  .catch(error => console.error('Error fetching CV template:', error));
+document.addEventListener('alpine:init', () => {
+  Alpine.data('form', () => ({
+      personalDetails: {
+          fullName: '',
+          gender: '',
+          age: '',
+          citizenship: 'Ukrainian',
+          maritalStatus: 'Single',
+      },
+      contacts: {
+          emails: [''],
+          phoneNumbers: [''],
+          location: {
+              country: 'Ukraine',
+              city: 'Kyiv',
+          },
+      },
+      education: [{ name: '', institute: '', period: { start: '', end: '' } }],
+      workExperience: [{ companyName: '', location: { country: '', city: '' }, position: '', period: { start: '', end: '' } }],
+      languages: [{ name: 'Ukrainian', level: 'Native' }],
+      programmingLanguages: [{ name: 'C++', level: 'Trainee' }],
+
+      async submit() {
+          const data = {};
+          data.personalDetails = structuredClone(Alpine.raw(this.personalDetails));
+          data.contacts = structuredClone(Alpine.raw(this.contacts));
+          data.education = structuredClone(Alpine.raw(this.education));
+          data.workExperience = structuredClone(Alpine.raw(this.workExperience));
+          data.languages = structuredClone(Alpine.raw(this.languages));
+          data.programmingLanguages = structuredClone(Alpine.raw(this.programmingLanguages));
+          data.personalDetails.age = Number(data.personalDetails.age);
+          
+          let resp = await fetch('https://profile-builder-2.free.beeceptor.com/cretecv', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+          });
+
+          switch (resp.status) {
+            case 201:
+                window.location.replace('/');
+                break;
+            case 400:
+                alert(await resp.text());
+                break;
+        }
+      },
+  }));
 });
 
 document.addEventListener('alpine:init', () => {
@@ -21,7 +62,8 @@ document.addEventListener('alpine:init', () => {
         }
       },
       clearImage() {
-          this.photo = null;         this.$refs.fileInput.value = ""; 
+          this.photo = null;        
+          this.$refs.fileInput.value = ""; 
       },
   
     }));
@@ -56,6 +98,7 @@ document.addEventListener('alpine:init', () => {
           this.newEmail = '';
           this.errorMessage = '';
         },
+
       };
   }
     function phoneManager() {
@@ -109,5 +152,6 @@ document.addEventListener('alpine:init', () => {
       return `${day}.${month}.${year}`;
   }
   
-  
+
+
   
