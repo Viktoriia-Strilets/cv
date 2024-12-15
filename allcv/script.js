@@ -1,16 +1,23 @@
 function fetchData() {
-  fetch('https://profile-builder-2.free.beeceptor.com/allcv', {
-    method: 'GET', 
+  fetch('https://profile-builder.free.beeceptor.com/allcv', {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
+      }
   })
-  .then(response => response.json())
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json(); 
+  })
   .then(data => {
-    console.log('Response from Beeceptor:', data);
+      console.log('Received data:', data);       
   })
   .catch(error => {
-    console.error('Error:', error);
+      console.error('There was a problem with the fetch operation:', error);
   });
 }
-
 
 fetchData(); 
 

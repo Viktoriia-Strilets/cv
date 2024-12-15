@@ -31,7 +31,7 @@ document.addEventListener('alpine:init', () => {
           data.programmingLanguages = structuredClone(Alpine.raw(this.programmingLanguages));
           data.personalDetails.age = Number(data.personalDetails.age);
           
-          let resp = await fetch('https://profile-builder-2.free.beeceptor.com/cretecv', {
+          let resp = await fetch('https://profile-builder.free.beeceptor.com/createcv', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -151,6 +151,8 @@ document.addEventListener('alpine:init', () => {
       const [year, month, day] = date.split('-'); 
       return `${day}.${month}.${year}`;
   }
+
+  
   
 
 
