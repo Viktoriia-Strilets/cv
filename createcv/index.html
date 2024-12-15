@@ -30,6 +30,7 @@
       workExperience: [], 
       programmingLanguages: [] 
     }">
+    <div id="notificationArea"></div>
       <header>
         <h1 onclick="window.open('http://127.0.0.1:5500/allcv/index.html', '_blank')">ProFile Builder</h1>
         <h2>Create CV</h2>
@@ -39,9 +40,10 @@
     <button class="button backH" x-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })">
         ⩕
     </button>
-    
+
       <!-- Personal Details Section -->
-      <form class="container-md border p-5" x-data="form" x-on:submit.prevent="submit()">
+      
+
       <section>
         <h3 class = "section section-title">Personal Details</h3>
         
@@ -65,9 +67,9 @@
           <legend>Choose your gender</legend>
           <input id="genderMale" type="radio" value="Male" x-model="personalDetails.gender" />
           <label for="genderMale">Male</label>
-          <input id="genderFemale" type="radio" value="Female" x-model="personalDetails.gender" />
+          <input id="genderFemale" type="radio" value="Female" x-model="personalDetails.gender"  />
           <label for="genderFemale">Female</label>
-          <input id="genderOther" type="radio" value="Other" x-model="personalDetails.gender" />
+          <input id="genderOther" type="radio" value="Other" x-model="personalDetails.gender"/>
           <label for="genderOther">Other</label>
         </fieldset>
         <fieldset>
@@ -79,7 +81,7 @@
          </fieldset>
         <div class="field">
   <label for="age">Age:</label>
-        <input id="age" type="number" x-model="personalDetails.age" class="field-input" min="14" step="1" />       
+        <input id="age" type="number" x-model="personalDetails.age" class="field-input" min="14" step="1"/>       
         </div>
       </section>
 
@@ -319,13 +321,14 @@
     </div>
   </div>
 </section>
-
+<form x-data="form" @submit="submit($event)" >
 <!-- Submit and Clear Section -->
 <div>
   <div class="button-container">
-   <button  class="button save" x-on:click="alert('CV created!')" type="submit">Create CV</button>   
-   <button  class="button cancel" x-on:click= "personalDetails = {}; contacts = {}; languages = []; education = []; workExperience = []; programmingLanguages = [], clearImage()">Clear</button>
-</div>    
+    <button class="button save" type="submit">Create CV</button>
+   <button  class="button cancel" x-on:click= "personalDetails = {}; contacts = {}; languages = []; education = []; workExperience = []; programmingLanguages = []">Clear</button>
+</div> 
+ 
   </div>    
 </form>
 </main>

@@ -248,3 +248,54 @@ body {
 
 
 
+  .notification-area {
+    position: fixed;
+    top: 10px; /* Відступ від верхнього краю */
+    left: 50%; /* Центруємо по горизонталі */
+    transform: translateX(-50%); /* Коригуємо позицію для точного центровання */
+    z-index: 1000;
+    max-height: 100vh; /* Максимальна висота — вся видима частина екрану */
+    overflow-y: auto; /* Дозволяємо прокручувати сповіщення, якщо їх більше ніж місця */
+    padding-top: 10px; /* Додаємо відступ від верхнього краю */
+    pointer-events: none; /* Забороняємо взаємодіяти з фоном */
+}
+
+.notification {
+    display: flex;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    animation: fade-in-out 5s ease-in-out;
+    pointer-events: auto; /* Дозволяємо взаємодіяти з повідомленням */
+}
+
+/* Стилі для успішного та помилкового повідомлення */
+.notification.success {
+    background-color: #28a745;
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+
+/* Анімація */
+@keyframes fade-in-out {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+
+
