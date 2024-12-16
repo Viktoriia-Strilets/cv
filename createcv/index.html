@@ -9,7 +9,7 @@
   </head>
   <body>
     <main x-data="{
-      imageSrc: '',
+      photo: '',
       personalDetails: {
             fullName: '',
             gender: '',
@@ -331,7 +331,17 @@
     <form x-data="form" @submit="submit($event)" > 
     <button class="button save" type="submit" >Create CV</button>
     </form>
-    <button  class="button cancel"  x-on:click= "personalDetails = {}; contacts = {}; languages = []; education = []; workExperience = []; programmingLanguages = [];  imageSrc=''">Clear</button>
+    <button  class="button cancel"  x-on:click="
+    personalDetails = { fullName: '', gender: '', age: '', citizenship: '', maritalStatus: '' };
+    contacts.emails.splice(0, contacts.emails.length);
+    contacts.phoneNumbers.splice(0, contacts.phoneNumbers.length);
+    contacts.location = { country: '', city: '' };
+    languages.splice(0, languages.length);
+    education.splice(0, education.length);
+    workExperience.splice(0, workExperience.length);
+    programmingLanguages.splice(0, programmingLanguages.length);
+    photo = '';
+">Clear</button>
 
   </div>  
   </div>    

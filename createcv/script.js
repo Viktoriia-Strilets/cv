@@ -15,6 +15,7 @@ document.addEventListener('alpine:init', () => {
   }
 
   Alpine.data('form', () => ({
+    photo: '',
     personalDetails: {
       fullName: '',
       gender: 'Male',
@@ -35,28 +36,6 @@ document.addEventListener('alpine:init', () => {
     languages: [{ name: 'Ukrainian', level: 'Native' }],
     programmingLanguages: [{ name: 'C++', level: 'Trainee' }],
 
-    clearForm() {
-      this.personalDetails = {
-        fullName: '',
-        gender: '',
-        age: '',
-        citizenship: '',
-        maritalStatus: '',
-      };
-      this.contacts = {
-        emails: [''],
-        phoneNumbers: [''],
-        location: {
-          country: '',
-          city: '',
-        },
-      };
-      this.education = [{ name: '', institute: '', period: { start: '', end: '' } }];
-      this.workExperience = [{ companyName: '', location: { country: '', city: '' }, position: '', period: { start: '', end: '' } }];
-      this.languages = [{ name: '', level: '' }];
-      this.programmingLanguages = [{ name: '', level: '' }];
-      this.imageSrc = ''; 
-    },
     async submit(event) {
       event.preventDefault();
       const data = {
@@ -66,11 +45,12 @@ document.addEventListener('alpine:init', () => {
         workExperience: structuredClone(Alpine.raw(this.workExperience)),
         languages: structuredClone(Alpine.raw(this.languages)),
         programmingLanguages: structuredClone(Alpine.raw(this.programmingLanguages)),
+        photo: this.photo, 
       };
       data.personalDetails.age = Number(data.personalDetails.age);
 
       try {
-        let response = await fetch('https://profile-builder-2.free.beeceptor.com/cretecv', {
+        let response = await fetch('https://profile-builder.free.beeceptor.com/cretecv', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -112,7 +92,7 @@ document.addEventListener('alpine:init', () => {
       },
       clearImage() {
         if (this.photo) {
-          URL.revokeObjectURL(this.photo); // Очищення URL
+          URL.revokeObjectURL(this.photo); 
         }
           this.photo = null;        
           this.$refs.fileInput.value = ""; 
@@ -145,6 +125,9 @@ document.addEventListener('alpine:init', () => {
         removeEmail(idx) {
           this.contacts.emails.splice(idx, 1);
         },
+        removeAllEmails() {
+          this.contacts.emails = []; 
+        },
         cancelAdding() {
           this.addingEmail = false;
           this.newEmail = '';
@@ -173,7 +156,11 @@ document.addEventListener('alpine:init', () => {
             this.addingPhone = false;
           }
         },
-        removePhone(idx) {        this.contacts.phoneNumbers.splice(idx, 1);
+        removePhone(idx) {        
+          this.contacts.phoneNumbers.splice(idx, 1);
+        },
+        removeAllPhones() {
+          this.contacts.phoneNumbers = []; 
         },
         cancelAdding() {
           this.addingPhone = false;
