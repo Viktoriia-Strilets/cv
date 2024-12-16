@@ -39,33 +39,38 @@ document.addEventListener('alpine:init', () => {
 });
 
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const image = document.getElementById('profileImage');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalImage = document.getElementById('modalImage');
-    const closeModalButton = document.getElementById('closeModal');
-    
-    
-    image.addEventListener('click', function(event) {
+document.addEventListener('DOMContentLoaded', function() {
+  const image = document.getElementById('profileImage');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalImage = document.getElementById('modalImage');
+  const closeModalButton = document.getElementById('closeModal');
+  
+  image.addEventListener('click', function(event) {
       modalImage.src = event.target.src;  
       modalOverlay.style.display = 'flex'; 
-    
-    closeModalButton.addEventListener('click', function() {
+  });
+
+  closeModalButton.addEventListener('click', function() {
       modalOverlay.style.display = 'none'; 
-    });
-    
-    
-    modalOverlay.addEventListener('click', function() {
+  });
+  
+  modalOverlay.addEventListener('click', function() {
       modalOverlay.style.display = 'none'; 
-    });
-    
-    
-    const modalContent = document.querySelector('.modal-content');
-    modalContent.addEventListener('click', function(event) {
+  });
+  
+  const modalContent = document.querySelector('.modal-content');
+  modalContent.addEventListener('click', function(event) {
       event.stopPropagation(); 
-    });
-    })
-    })
+  });
+
+  const buttons = document.querySelectorAll('.but');
+  buttons.forEach(button => {
+      button.addEventListener('click', function() {
+          buttons.forEach(btn => btn.classList.remove('active'));          
+          this.classList.add('active');
+      });
+  });
+});
   
   function emailManager() {
       return {
@@ -75,7 +80,7 @@ document.addEventListener('alpine:init', () => {
         contacts: { emails: [] }, 
         validateEmail() {
           this.errorMessage = '';
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          const emailRegex = /^[^\s@]+@nure\.ua$/;
           if (!emailRegex.test(this.newEmail)) {
             this.errorMessage = 'Invalid email format.';
           }
@@ -146,13 +151,4 @@ document.addEventListener('alpine:init', () => {
       return `${day}.${month}.${year}`;
   }
   
-  const buttons = document.querySelectorAll('.but');
-  
-
-  buttons.forEach(button => {
-      button.addEventListener('click', function() {
-          buttons.forEach(btn => btn.classList.remove('active'));          
-          this.classList.add('active');
-      });
-  });
-  
+ 

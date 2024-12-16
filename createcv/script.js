@@ -35,6 +35,28 @@ document.addEventListener('alpine:init', () => {
     languages: [{ name: 'Ukrainian', level: 'Native' }],
     programmingLanguages: [{ name: 'C++', level: 'Trainee' }],
 
+    clearForm() {
+      this.personalDetails = {
+        fullName: '',
+        gender: '',
+        age: '',
+        citizenship: '',
+        maritalStatus: '',
+      };
+      this.contacts = {
+        emails: [''],
+        phoneNumbers: [''],
+        location: {
+          country: '',
+          city: '',
+        },
+      };
+      this.education = [{ name: '', institute: '', period: { start: '', end: '' } }];
+      this.workExperience = [{ companyName: '', location: { country: '', city: '' }, position: '', period: { start: '', end: '' } }];
+      this.languages = [{ name: '', level: '' }];
+      this.programmingLanguages = [{ name: '', level: '' }];
+      this.imageSrc = ''; 
+    },
     async submit(event) {
       event.preventDefault();
       const data = {
@@ -48,7 +70,7 @@ document.addEventListener('alpine:init', () => {
       data.personalDetails.age = Number(data.personalDetails.age);
 
       try {
-        let response = await fetch('https://profile-builder.free.beeceptor.com/createcv', {
+        let response = await fetch('https://profile-builder-2.free.beeceptor.com/cretecv', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -108,7 +130,7 @@ document.addEventListener('alpine:init', () => {
         contacts: { emails: [] }, 
         validateEmail() {
           this.errorMessage = '';
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          const emailRegex = /^[^\s@]+@nure\.ua$/;
           if (!emailRegex.test(this.newEmail)) {
             this.errorMessage = 'Invalid email format.';
           }

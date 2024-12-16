@@ -43,7 +43,7 @@
 
       <!-- Personal Details Section -->
       
-
+      <div x-data="form"  > 
       <section>
         <h3 class = "section section-title">Personal Details</h3>
         
@@ -322,13 +322,14 @@
     </div>
   </div>
 </section>
+
 <div id="notificationArea"></div>
 
 <!-- Submit and Clear Section -->
 <div>
-  <div class="button-container">  
-  <form x-data="form" @submit="submit($event)" >    
-    <button class="button save" type="submit">Create CV</button>
+  <div class="button-container" > 
+    <form x-data="form" @submit="submit($event)" > 
+    <button class="button save" type="submit" >Create CV</button>
     </form>
     <button  class="button cancel"  x-on:click= "personalDetails = {}; contacts = {}; languages = []; education = []; workExperience = []; programmingLanguages = [];  imageSrc=''">Clear</button>
 
