@@ -36,15 +36,12 @@ body {
   h3 {
     margin-top: 0;
     font-size: 2em;
-  }
-  a {
-    color: #444;
-  }
-  
+  }  
   p, span{
     margin-top: 0;
   font-size: 1.2em;
   }
+
   /* Main content */
   .container {
       display: flex;

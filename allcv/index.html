@@ -18,15 +18,40 @@
  
   <!-- Alpine.js Data -->
   <main x-data="{ 
-      fullname: 'Viktoriia Strilets',         
-      id: '1',   
-      citizenship: 'Ukrainian',   
-      gender: 'Female',
-      maritalStatus: 'Single',   
-      age: 19,          
-      languages: [{name: 'English', level: 'B1'}], 
-      programmingLanguages: [{progLang: 'JavaScript', progLevel: 'Junior'}, {progLang: 'C#', progLevel: 'Junior'}], 
-      showDetails: false 
+    profiles: [
+    {
+        fullname: 'Viktoriia Strilets',
+        id: '1',
+        citizenship: 'Ukrainian',
+        gender: 'Female',
+        maritalStatus: 'Single',
+        age: 19,
+        languages: [{ name: 'English', level: 'B1' }],
+        programmingLanguages: [
+            { progLang: 'JavaScript', progLevel: 'Junior' },
+            { progLang: 'C#', progLevel: 'Junior' }
+        ],
+        imageSrc: 'image.jpg',
+        link: 'http://127.0.0.1:5500/mycv/index.html ',
+        showDetails: false
+    },
+    {
+        fullname: 'John Doe',
+        id: '2',
+        citizenship: 'American',
+        gender: 'Male',
+        maritalStatus: 'Married',
+        age: 25,
+        languages: [{ name: 'Spanish', level: 'B2' }, { name: 'English', level: 'C1' }],
+        programmingLanguages: [
+            { progLang: 'Python', progLevel: 'Senior' },
+            { progLang: 'Java', progLevel: 'Mid-level' }
+        ],
+        imageSrc: 'https://ireland.apollo.olxcdn.com/v1/files/o8g59udi9rii3-UA/image;s=1126x2000',
+        link: 'http://127.0.0.1:5500/mycv/index1.html ',
+        showDetails: false
+    }
+]
     }">
 
     <!-- Create CV Button -->
@@ -37,32 +62,34 @@
         ⩕
     </button>
    
-    <div class="container">   
+    <div class="container"> 
+      
       <div class="profile-list">
+      <template x-for="(profile, index) in profiles" :key="index">  
         <div class="profile-card">
           <div>
-           <img class = "img" src="image.jpg" id="profileImage" />
+           <img class = "img" :src="profile.imageSrc" id="profileImage" />
           </div>
           <div class="profile-content">
-            <h3><span x-text="fullname"></span></h3>
+            <h3><span x-text="profile.fullname"></span></h3>
 
             <button class="button more-details" 
-                    x-on:click="showDetails = !showDetails">
+                    x-on:click="profile.showDetails = !profile.showDetails">
               <span>Previews</span>
             </button>
             <div class="profile-details" 
-                 x-bind:class="{'visible': showDetails}">
+                 x-bind:class="{'visible': profile.showDetails}">
               <p><strong>ID: </strong><span x-text="id"></span></p>
               <h2>Personal Details:</h2>
         <ul>
-          <li><span x-text="citizenship"></span></li>
-          <li> <span x-text="gender"></span></li>
-          <li> <span x-text="maritalStatus"></span></li>
-          <li><span x-text="age"></span></li>
+          <li><span x-text="profile.citizenship"></span></li>
+          <li> <span x-text="profile.gender"></span></li>
+          <li> <span x-text="profile.maritalStatus"></span></li>
+          <li><span x-text="profile.age"></span></li>
         </ul>
               <h2>Languages:</h2>
               <ul>
-                <template x-for="(language, idx) in languages" :key="idx">
+                <template x-for="(language, idx) in profile.languages" :key="idx">
                   <li>
                      <span x-text="language.name"></span> - <span x-text="language.level"></span>
                   </li>
@@ -70,19 +97,23 @@
               </ul>
               <h2>Programming Languages:</h2>
               <ul>
-                <template x-for="(lang, idx) in programmingLanguages" :key="idx">
+                <template x-for="(lang, idx) in profile.programmingLanguages" :key="idx">
                   <li>
                     <span x-text="lang.progLang"></span> - <span x-text="lang.progLevel"></span>
                   </li>
                 </template>
               </ul>
             </div>
-            <a onclick="window.open('http://127.0.0.1:5500/mycv/index.html', '_blank')">
-            <button class="button more-details"><span>More details</span></button>
-              </a>
+            <div>
+              <button class="button more-details" 
+              x-on:click="window.open(profile.link, '_blank')">
+        <span>More details</span>
+      </button>
+            </div>
       </div> 
       </div>
      </div>
+     </template>
     </div>
   </main>
   

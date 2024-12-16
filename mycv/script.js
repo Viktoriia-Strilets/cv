@@ -31,7 +31,8 @@ document.addEventListener('alpine:init', () => {
       }
     },
     clearImage() {
-        this.photo = null;         this.$refs.fileInput.value = ""; 
+        this.photo = null;        
+        this.$refs.fileInput.value = ""; 
     },
 
   }));

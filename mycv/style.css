@@ -46,6 +46,7 @@ body {
     margin-top: 0;
     font-size: 1.3em;
   }
+
   /*label */
    label {
       font-size: 1.5em;
@@ -107,14 +108,12 @@ body {
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease;
     font-size: 1.5em;
-  }
-  
+  }  
   li button:hover {
     background-color: #FFF8DC; 
     color: #696969;
     transform: scale(1.05); 
-  }
-  
+  }  
   li button.active {
     background-color: #FFF8DC;
     color: #696969;
@@ -206,7 +205,7 @@ body {
   }
   
   .button-yes {
-     background-color: #28a745;
+    background-color: #28a745;
     color: white;
     border: none;
     padding: 5px 10px;
